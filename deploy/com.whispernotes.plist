@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Vorlage: setup_mac.sh ersetzt __REPO__, __UV__, __HOME__ und __BREW__ und installiert nach ~/Library/LaunchAgents -->
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.whispernotes</string>
+
+  <key>WorkingDirectory</key>
+  <string>__REPO__/backend</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>__UV__</string>
+    <string>run</string>
+    <string>--no-sync</string>
+    <string>uvicorn</string>
+    <string>app.main:app</string>
+    <string>--host</string>
+    <string>0.0.0.0</string>
+    <string>--port</string>
+    <string>8000</string>
+  </array>
+
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>__BREW__/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+  </dict>
+
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <true/>
+  <!-- SIGTERM an den Wrapper → lifespan beendet whisper-server; danach bleibt Zeit bis SIGKILL -->
+  <key>ExitTimeOut</key>
+  <integer>20</integer>
+
+  <key>StandardOutPath</key>
+  <string>__HOME__/Library/Logs/whispernotes/wrapper.log</string>
+  <key>StandardErrorPath</key>
+  <string>__HOME__/Library/Logs/whispernotes/wrapper.log</string>
+</dict>
+</plist>

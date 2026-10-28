@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+backend/.venv/
+backend/.env
+backend/data/
+backend/models/
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+
+# Discord-Bot
+discord-bot/node_modules/
+discord-bot/.env
+discord-bot/recordings/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker (lokale Konfiguration und Daten)
+docker/.env
+docker/whispernotes.env
+docker/discord.env
+docker/data/
+
+# Interne Arbeitsnotizen (nicht im öffentlichen Repo)
+VERBESSERUNGEN*.md

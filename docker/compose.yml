@@ -1,0 +1,76 @@
+# WhisperNotes auf einem Linux-Rechner – diese Datei ist für AMD-GPUs (z. B. Ryzen AI Max „Strix Halo“).
+#
+#   cp docker/whispernotes.env.example docker/whispernotes.env   # anpassen
+#   docker compose -f docker/compose.yml up -d --build                       # nur WhisperNotes
+#   docker compose -f docker/compose.yml --profile ollama --profile discord up -d --build
+#
+# NVIDIA-GPU: zusätzlich  -f docker/compose.nvidia.yml   · nur CPU: zusätzlich  -f docker/compose.cpu.yml
+# Profile: "ollama" (Ollama im Container), "discord" (Discord-Bot). Ohne Profil nur WhisperNotes,
+# z. B. wenn Ollama schon anders läuft (dann OLLAMA_URL in whispernotes.env setzen).
+# Details: docs/docker.md
+name: whispernotes
+
+services:
+  whispernotes:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      args:
+        GPU: ${WN_GPU:-vulkan}
+        PYANNOTE: ${WN_PYANNOTE:-1}
+        TORCH_INDEX: ${WN_TORCH_INDEX:-https://repo.amd.com/rocm/whl/gfx1151/}
+    # Fertiges Image statt selbst bauen: WN_IMAGE=poldion/whispernotes:latest in docker/.env, dann ohne --build starten
+    image: ${WN_IMAGE:-whispernotes:local}
+    restart: unless-stopped
+    ports:
+      - "${WN_PORT:-8000}:8000"
+    env_file:
+      - whispernotes.env
+    volumes:
+      - ${WN_DATA:-./data}:/data
+    # GPU: /dev/dri für Vulkan (whisper.cpp), /dev/kfd für ROCm (pyannote über PyTorch). Ohne AMD-GPU
+    # /dev/kfd entfernen und WN_TORCH_INDEX=https://download.pytorch.org/whl/cpu setzen.
+    # Gruppen-IDs der Gerätedateien: `getent group video render` → docker/.env (VIDEO_GID, RENDER_GID)
+    devices:
+      - /dev/dri:/dev/dri
+      - /dev/kfd:/dev/kfd
+    group_add:
+      - "${VIDEO_GID:-44}"
+      - "${RENDER_GID:-992}"
+
+  ollama:
+    profiles: ["ollama"]
+    image: ollama/ollama:rocm
+    restart: unless-stopped
+    ports:
+      - "${OLLAMA_PORT:-11434}:11434"
+    environment:
+      OLLAMA_KEEP_ALIVE: "-1"
+      OLLAMA_FLASH_ATTENTION: "1"
+      OLLAMA_KV_CACHE_TYPE: "q8_0"
+      OLLAMA_CONTEXT_LENGTH: "${OLLAMA_CONTEXT_LENGTH:-32768}"
+      # Nur falls die ROCm-Version im Image gfx1151 (Radeon 8060S) noch nicht kennt:
+      # HSA_OVERRIDE_GFX_VERSION: "11.5.1"
+    volumes:
+      - ollama:/root/.ollama
+    devices:
+      - /dev/kfd:/dev/kfd
+      - /dev/dri:/dev/dri
+    group_add:
+      - "${VIDEO_GID:-44}"
+      - "${RENDER_GID:-992}"
+
+  discord-bot:
+    profiles: ["discord"]
+    build:
+      context: ../discord-bot
+    restart: unless-stopped
+    env_file:
+      - discord.env
+    environment:
+      WHISPERNOTES_URL: http://whispernotes:8000
+    depends_on:
+      - whispernotes
+
+volumes:
+  ollama:

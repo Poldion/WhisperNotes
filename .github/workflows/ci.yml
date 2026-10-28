@@ -1,0 +1,54 @@
+# Tests bei jedem Push und Pull Request (GitHub Actions).
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: ffmpeg
+        # sudo nur, wo es ihn gibt (selbst gehostete Runner laufen oft als root)
+        run: |
+          SUDO=$(command -v sudo || true)
+          $SUDO apt-get update && $SUDO apt-get install -y --no-install-recommends ffmpeg
+      - name: Abhängigkeiten
+        working-directory: backend
+        run: pip install uv && uv sync
+      - name: Tests
+        working-directory: backend
+        run: uv run pytest -q
+
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - working-directory: frontend
+        run: npm ci --no-audit --no-fund
+      - name: Übersetzungen vollständig
+        working-directory: frontend
+        run: npm run check-i18n
+      - name: Typen und Build
+        working-directory: frontend
+        run: npm run build
+
+  discord-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - working-directory: discord-bot
+        run: npm ci --no-audit --no-fund
+      - working-directory: discord-bot
+        run: npm test

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Vorlage: setup_mac.sh ersetzt __REPO__, __NODE__, __HOME__ und __BREW__ und installiert nach ~/Library/LaunchAgents.
+     Wird nur eingerichtet, wenn discord-bot/.env ein DISCORD_TOKEN enthält. -->
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.whispernotes.discord</string>
+
+  <key>WorkingDirectory</key>
+  <string>__REPO__/discord-bot</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>__NODE__</string>
+    <string>--env-file=.env</string>
+    <string>bot.mjs</string>
+  </array>
+
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>__BREW__/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+  </dict>
+
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <true/>
+  <!-- SIGTERM: laufende Aufnahmen werden noch gesichert und hochgeladen -->
+  <key>ExitTimeOut</key>
+  <integer>120</integer>
+
+  <key>StandardOutPath</key>
+  <string>__HOME__/Library/Logs/whispernotes/discord-bot.log</string>
+  <key>StandardErrorPath</key>
+  <string>__HOME__/Library/Logs/whispernotes/discord-bot.log</string>
+</dict>
+</plist>

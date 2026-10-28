@@ -1,0 +1,13 @@
+.git
+**/node_modules
+**/__pycache__
+**/.pytest_cache
+backend/.venv
+backend/.env
+backend/data
+backend/models
+frontend/dist
+discord-bot/.env
+discord-bot/recordings
+docker/data
+docker/*.env

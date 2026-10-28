@@ -1,0 +1,18 @@
+# Ergänzung zu compose.yml für Rechner ohne passende GPU: alles rechnet auf der CPU.
+# Funktioniert überall, Whisper ist so aber deutlich langsamer (large-v3-turbo empfohlen).
+#
+#   docker compose -f docker/compose.yml -f docker/compose.cpu.yml up -d --build
+services:
+  whispernotes:
+    build:
+      args:
+        GPU: cpu
+        TORCH_INDEX: https://download.pytorch.org/whl/cpu
+    image: ${WN_IMAGE:-whispernotes:local-cpu}
+    devices: !reset []
+    group_add: !reset []
+
+  ollama:
+    image: ollama/ollama:latest
+    devices: !reset []
+    group_add: !reset []

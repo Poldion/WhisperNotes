@@ -1,0 +1,36 @@
+{
+  "name": "whispernotes-dashboard",
+  "private": true,
+  "version": "0.1.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Poldion/WhisperNotes.git",
+    "directory": "frontend"
+  },
+  "homepage": "https://github.com/Poldion/WhisperNotes#readme",
+  "bugs": {
+    "url": "https://github.com/Poldion/WhisperNotes/issues"
+  },
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "check-i18n": "node scripts/check-i18n.mjs",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "dompurify": "^3.4.16",
+    "marked": "^18.0.14",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "@vitejs/plugin-react": "^5.0.0",
+    "typescript": "~5.8.3",
+    "vite": "^7.0.0"
+  }
+}

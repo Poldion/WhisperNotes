@@ -1,0 +1,37 @@
+# Ergänzung zu compose.yml für Rechner mit NVIDIA-GPU (CUDA). Voraussetzung: NVIDIA-Treiber und das
+# NVIDIA Container Toolkit auf dem Host (`docker run --rm --gpus all ubuntu nvidia-smi` muss die GPU zeigen).
+#
+#   docker compose -f docker/compose.yml -f docker/compose.nvidia.yml up -d --build
+#
+# Nur die eigene GPU-Generation übersetzen spart Bauzeit: WN_CUDA_ARCHS=89 in docker/.env (RTX 40xx), 86 (RTX 30xx) …
+services:
+  whispernotes:
+    build:
+      args:
+        GPU: cuda
+        TORCH_INDEX: https://download.pytorch.org/whl/cu128
+        BUILD_IMAGE: nvidia/cuda:12.8.1-devel-ubuntu24.04
+        RUNTIME_IMAGE: nvidia/cuda:12.8.1-runtime-ubuntu24.04
+        CUDA_ARCHS: ${WN_CUDA_ARCHS:-75;80;86;89;90;120}
+    image: ${WN_IMAGE:-whispernotes:local-cuda}
+    devices: !reset []
+    group_add: !reset []
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+  ollama:
+    image: ollama/ollama:latest
+    devices: !reset []
+    group_add: !reset []
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
