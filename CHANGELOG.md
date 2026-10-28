@@ -3,6 +3,13 @@
 All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/), and versions follow [Semantic Versioning](https://semver.org/).
 
+## [0.1.1] – 2026-10-29
+
+### Added
+
+- English versions of the manual (`docs/manual.md`) and the Docker guide (`docs/docker.en.md`); the English README
+  links to them, every manual has a language switch at the top.
+
 ## [0.1.0] – 2026-10-28
 
 Initial public release.

@@ -115,8 +115,8 @@ flowchart LR
 
 ## Dokumentation
 
-- [docs/handbuch.md](docs/handbuch.md) – API, Discord-Bot, Header, Zugang, Sprache, alle Einstellungen
-- [docs/docker.md](docs/docker.md) – Betrieb mit Docker unter Linux (AMD, NVIDIA oder nur CPU)
+- [docs/handbuch.md](docs/handbuch.md) – API, Discord-Bot, Header, Zugang, Sprache, alle Einstellungen (Englisch: [manual.md](docs/manual.md))
+- [docs/docker.md](docs/docker.md) – Betrieb mit Docker unter Linux (AMD, NVIDIA oder nur CPU) (Englisch: [docker.en.md](docs/docker.en.md))
 - [docs/spezifikation.md](docs/spezifikation.md) – ursprüngliche Spezifikation
 - [CHANGELOG.md](CHANGELOG.md) – Versionsverlauf (nur Englisch)
 - [CONTRIBUTING.md](CONTRIBUTING.md) – Entwicklungsumgebung, Tests, Regeln (nur Englisch, mit deutschem Abschnitt)

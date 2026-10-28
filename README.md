@@ -38,7 +38,7 @@ they are split, transcribed, assigned to speakers and summarised.
 
 ## Quick start
 
-**Linux with Docker** (details, NVIDIA and CPU: [docs/docker.md](docs/docker.md), German):
+**Linux with Docker** (details, NVIDIA and CPU: [docs/docker.en.md](docs/docker.en.md)):
 
 ```bash
 git clone https://github.com/Poldion/WhisperNotes.git && cd WhisperNotes
@@ -116,8 +116,8 @@ flowchart LR
 
 ## Documentation
 
-- [docs/handbuch.md](docs/handbuch.md) – API, Discord bot, headers, access, language, all settings (German)
-- [docs/docker.md](docs/docker.md) – running with Docker on Linux: AMD, NVIDIA or CPU only (German)
+- [docs/manual.md](docs/manual.md) – API, Discord bot, headers, access, language, all settings (German: [handbuch.md](docs/handbuch.md))
+- [docs/docker.en.md](docs/docker.en.md) – running with Docker on Linux: AMD, NVIDIA or CPU only (German: [docker.md](docs/docker.md))
 - [docs/spezifikation.md](docs/spezifikation.md) – original specification (German)
 - [CHANGELOG.md](CHANGELOG.md) – version history
 - [CONTRIBUTING.md](CONTRIBUTING.md) – development setup, tests, guidelines, translations

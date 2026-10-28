@@ -1,5 +1,7 @@
 # Betrieb mit Docker (Linux)
 
+🇬🇧 [English](docker.en.md) · 🇩🇪 Deutsch
+
 WhisperNotes läuft als Container auf jedem Linux-Rechner mit x86-64-CPU. Am schnellsten mit Grafikkarte. Es gibt drei
 Varianten:
 

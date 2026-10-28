@@ -1,5 +1,7 @@
 # WhisperNotes
 
+🇬🇧 [English](manual.md) · 🇩🇪 Deutsch
+
 FastAPI-Wrapper um [whisper.cpp](https://github.com/ggml-org/whisper.cpp) – nativ auf macOS (Apple Silicon, Metal)
 oder als Docker-Container unter Linux mit AMD-, NVIDIA- oder ohne GPU ([docker.md](docker.md)).
 Ursprüngliche Spezifikation: [spezifikation.md](spezifikation.md).
