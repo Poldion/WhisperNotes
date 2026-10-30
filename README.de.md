@@ -149,4 +149,4 @@ Channel an.
 
 Wenn dir das Projekt hilft, freue ich mich über Rückmeldungen, Fehlerberichte und Pull Requests – siehe
 [CONTRIBUTING.md](CONTRIBUTING.md).
-Ein Spenden-Link folgt. <!-- SPENDEN_LINK -->
+Du kannst mir auch [einen Kaffee ausgeben](https://buymeacoffee.com/poldion).
